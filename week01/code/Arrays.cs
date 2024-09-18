@@ -8,13 +8,24 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        //I need to create an array that will hold numbers that are multiples of the starting number. 
+        //There also needs to be something that tells the array how long it needs to be.
+        //It then need it to be displayed.
+
+        double[] multiples = new double[length];
+
+ 
+        for (int i = 0; i < length; i++)
+        {
+
+            multiples[i] = number * (i + 1);
+        }
+
+
+        return multiples;
     }
+    
 
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
@@ -25,9 +36,23 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+
+        //I need a list of numbers and a variable that keeps track of a number that means the amount needed to be rotated.
+        //I need to then use that variable to rotate the correct amount on that list so that it is shifted.
+
+        if (data.Count == 0 || amount == 0 || amount % data.Count == 0)
+            return;
+
+        int effectiveAmount = amount % data.Count;
+        
+        int splitIndex = data.Count - effectiveAmount;
+
+        List<int> rightPart = data.GetRange(splitIndex, effectiveAmount);
+        List<int> leftPart = data.GetRange(0, splitIndex);
+
+        rightPart.AddRange(leftPart);
+
+        data.Clear();
+        data.AddRange(rightPart); 
     }
 }
