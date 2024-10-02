@@ -21,8 +21,21 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var wordSet = new HashSet<string>(words);
+    var pairs = new List<string>();
+
+    foreach (var word in words)
+    {
+        var reversed = new string(word.Reverse().ToArray());
+        if (wordSet.Contains(reversed) && word != reversed)
+        {
+            pairs.Add($"{word} & {reversed}");
+            wordSet.Remove(word); // To prevent duplicates
+            wordSet.Remove(reversed);
+        }
+    }
+
+    return pairs.ToArray();
     }
 
     /// <summary>
@@ -39,13 +52,22 @@ public static class SetsAndMaps
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
         var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename))
-        {
-            var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
-        }
 
-        return degrees;
+    foreach (var line in File.ReadLines(filename))
+    {
+        var fields = line.Split(",");
+        if (fields.Length > 4) // Ensure there are enough columns
+        {
+            var degree = fields[3].Trim();
+            if (!degrees.ContainsKey(degree))
+            {
+                degrees[degree] = 0;
+            }
+            degrees[degree]++;
+        }
+    }
+
+    return degrees;
     }
 
     /// <summary>
@@ -66,8 +88,28 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var cleanedWord1 = word1.Replace(" ", "").ToLower();
+    var cleanedWord2 = word2.Replace(" ", "").ToLower();
+
+    if (cleanedWord1.Length != cleanedWord2.Length) return false;
+
+    var charCount = new Dictionary<char, int>();
+
+    foreach (var ch in cleanedWord1)
+    {
+        if (!charCount.ContainsKey(ch))
+            charCount[ch] = 0;
+        charCount[ch]++;
+    }
+
+    foreach (var ch in cleanedWord2)
+    {
+        if (!charCount.ContainsKey(ch) || charCount[ch] == 0)
+            return false;
+        charCount[ch]--;
+    }
+
+    return true;
     }
 
     /// <summary>
