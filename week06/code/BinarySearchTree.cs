@@ -79,8 +79,13 @@ public class BinarySearchTree : IEnumerable<int>
     }
 
     private void TraverseBackward(Node? node, List<int> values)
+    { 
+        if (node is not null)
     {
-        // TODO Problem 3
+        TraverseBackward(node.Right, values); // Visit right first
+        values.Add(node.Data);
+        TraverseBackward(node.Left, values); // Then left
+    }
     }
 
     /// <summary>
